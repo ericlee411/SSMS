@@ -1,0 +1,26 @@
+/****** Object:  Table [dbo].[MIITEMA]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[MIITEMA](
+	[itemId] [nvarchar](24) NOT NULL,
+	[uniquifier] [int] NOT NULL,
+	[lineNbr] [smallint] NOT NULL,
+	[altItemId] [nvarchar](24) NULL,
+	[rowVer] [timestamp] NOT NULL,
+ CONSTRAINT [PK_MIITEMA_KEY_0] PRIMARY KEY CLUSTERED 
+(
+	[itemId] ASC,
+	[uniquifier] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+ALTER TABLE [dbo].[MIITEMA] ADD  DEFAULT (' ') FOR [itemId]
+ALTER TABLE [dbo].[MIITEMA] ADD  DEFAULT ((0)) FOR [uniquifier]
+ALTER TABLE [dbo].[MIITEMA] ADD  DEFAULT ((0)) FOR [lineNbr]
+ALTER TABLE [dbo].[MIITEMA]  WITH CHECK ADD FOREIGN KEY([altItemId])
+REFERENCES [dbo].[MIITEM] ([itemId])
+ALTER TABLE [dbo].[MIITEMA]  WITH CHECK ADD  CONSTRAINT [FK_MIITEMA_MIITEM] FOREIGN KEY([itemId])
+REFERENCES [dbo].[MIITEM] ([itemId])
+ON DELETE CASCADE
+ALTER TABLE [dbo].[MIITEMA] CHECK CONSTRAINT [FK_MIITEMA_MIITEM]

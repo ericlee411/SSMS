@@ -1,0 +1,32 @@
+/****** Object:  Table [dbo].[MITXCLS]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[MITXCLS](
+	[auth] [nvarchar](12) NOT NULL,
+	[transType] [smallint] NOT NULL,
+	[classType] [smallint] NOT NULL,
+	[class] [smallint] NOT NULL,
+	[descr] [nvarchar](60) NOT NULL,
+	[exempt] [bit] NOT NULL,
+	[rowVer] [timestamp] NOT NULL,
+ CONSTRAINT [PK_MITXCLS_KEY_0] PRIMARY KEY CLUSTERED 
+(
+	[auth] ASC,
+	[transType] ASC,
+	[classType] ASC,
+	[class] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+CREATE NONCLUSTERED INDEX [IDX_MITXCLS_1] ON [dbo].[MITXCLS]
+(
+	[class] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+ALTER TABLE [dbo].[MITXCLS] ADD  DEFAULT ((2)) FOR [transType]
+ALTER TABLE [dbo].[MITXCLS] ADD  DEFAULT ((1)) FOR [classType]
+ALTER TABLE [dbo].[MITXCLS] ADD  DEFAULT ((1)) FOR [class]
+ALTER TABLE [dbo].[MITXCLS] ADD  DEFAULT (' ') FOR [descr]
+ALTER TABLE [dbo].[MITXCLS] ADD  DEFAULT ((0)) FOR [exempt]
+ALTER TABLE [dbo].[MITXCLS]  WITH CHECK ADD FOREIGN KEY([auth])
+REFERENCES [dbo].[MITXAUTH] ([auth])

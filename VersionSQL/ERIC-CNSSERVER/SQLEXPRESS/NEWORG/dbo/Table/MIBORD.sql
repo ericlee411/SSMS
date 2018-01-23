@@ -1,0 +1,79 @@
+/****** Object:  Table [dbo].[MIBORD]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[MIBORD](
+	[bomItem] [nvarchar](24) NOT NULL,
+	[bomRev] [nvarchar](6) NOT NULL,
+	[opCode] [nvarchar](24) NOT NULL,
+	[lineNbr] [smallint] NOT NULL,
+	[wcId] [nvarchar](24) NULL,
+	[toolId] [nvarchar](12) NULL,
+	[batchSize] [numeric](20, 6) NOT NULL,
+	[cycleTime] [numeric](20, 6) NOT NULL,
+	[setupTime] [numeric](20, 6) NOT NULL,
+	[preopTime] [numeric](20, 6) NOT NULL,
+	[postTime] [numeric](20, 6) NOT NULL,
+	[cmnt] [nvarchar](60) NOT NULL,
+	[overlap] [bit] NOT NULL,
+	[milestone] [bit] NOT NULL,
+	[ctlGroupId] [nvarchar](8) NULL,
+	[fldXml] [text] NOT NULL,
+	[rowVer] [timestamp] NOT NULL,
+ CONSTRAINT [PK_MIBORD_KEY_0] PRIMARY KEY CLUSTERED 
+(
+	[bomItem] ASC,
+	[bomRev] ASC,
+	[opCode] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+SET ANSI_PADDING ON
+
+CREATE NONCLUSTERED INDEX [IDX_MIBORD_1] ON [dbo].[MIBORD]
+(
+	[wcId] ASC,
+	[bomItem] ASC,
+	[bomRev] ASC,
+	[opCode] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+SET ANSI_PADDING ON
+
+CREATE NONCLUSTERED INDEX [IDX_MIBORD_2] ON [dbo].[MIBORD]
+(
+	[toolId] ASC,
+	[bomItem] ASC,
+	[bomRev] ASC,
+	[opCode] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+SET ANSI_PADDING ON
+
+CREATE NONCLUSTERED INDEX [IDX_MIBORD_3] ON [dbo].[MIBORD]
+(
+	[bomItem] ASC,
+	[bomRev] ASC,
+	[lineNbr] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+ALTER TABLE [dbo].[MIBORD] ADD  DEFAULT (' ') FOR [bomItem]
+ALTER TABLE [dbo].[MIBORD] ADD  DEFAULT ('0') FOR [bomRev]
+ALTER TABLE [dbo].[MIBORD] ADD  DEFAULT ('NEWOP') FOR [opCode]
+ALTER TABLE [dbo].[MIBORD] ADD  DEFAULT ((0)) FOR [lineNbr]
+ALTER TABLE [dbo].[MIBORD] ADD  DEFAULT ((0)) FOR [batchSize]
+ALTER TABLE [dbo].[MIBORD] ADD  DEFAULT ((0)) FOR [cycleTime]
+ALTER TABLE [dbo].[MIBORD] ADD  DEFAULT ((0)) FOR [setupTime]
+ALTER TABLE [dbo].[MIBORD] ADD  DEFAULT ((0)) FOR [preopTime]
+ALTER TABLE [dbo].[MIBORD] ADD  DEFAULT ((0)) FOR [postTime]
+ALTER TABLE [dbo].[MIBORD] ADD  DEFAULT (' ') FOR [cmnt]
+ALTER TABLE [dbo].[MIBORD] ADD  DEFAULT ((0)) FOR [overlap]
+ALTER TABLE [dbo].[MIBORD] ADD  DEFAULT ((1)) FOR [milestone]
+ALTER TABLE [dbo].[MIBORD] ADD  DEFAULT (' ') FOR [fldXml]
+ALTER TABLE [dbo].[MIBORD]  WITH CHECK ADD FOREIGN KEY([ctlGroupId])
+REFERENCES [dbo].[MIGROUP] ([groupId])
+ALTER TABLE [dbo].[MIBORD]  WITH CHECK ADD FOREIGN KEY([toolId])
+REFERENCES [dbo].[MITOOL] ([toolId])
+ALTER TABLE [dbo].[MIBORD]  WITH CHECK ADD FOREIGN KEY([wcId])
+REFERENCES [dbo].[MIMOWC] ([wcId])
+ALTER TABLE [dbo].[MIBORD]  WITH CHECK ADD  CONSTRAINT [FK_MIBORD_MIBOMH] FOREIGN KEY([bomItem], [bomRev])
+REFERENCES [dbo].[MIBOMH] ([bomItem], [bomRev])
+ON DELETE CASCADE
+ALTER TABLE [dbo].[MIBORD] CHECK CONSTRAINT [FK_MIBORD_MIBOMH]

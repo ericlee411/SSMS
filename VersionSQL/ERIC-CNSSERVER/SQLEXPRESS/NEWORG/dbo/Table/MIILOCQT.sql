@@ -1,0 +1,43 @@
+/****** Object:  Table [dbo].[MIILOCQT]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[MIILOCQT](
+	[itemId] [nvarchar](24) NOT NULL,
+	[locId] [nvarchar](6) NOT NULL,
+	[dateISO] [nvarchar](8) NOT NULL,
+	[qStk] [numeric](20, 6) NOT NULL,
+	[qWip] [numeric](20, 6) NOT NULL,
+	[qRes] [numeric](20, 6) NOT NULL,
+	[qOrd] [numeric](20, 6) NOT NULL,
+	[cStd] [numeric](20, 6) NOT NULL,
+	[cLast] [numeric](20, 6) NOT NULL,
+	[cAvg] [numeric](20, 6) NOT NULL,
+	[date]  AS (CONVERT([datetime],[dateISO])),
+	[rowVer] [timestamp] NOT NULL,
+ CONSTRAINT [PK_MIILOCQT_KEY_0] PRIMARY KEY CLUSTERED 
+(
+	[itemId] ASC,
+	[locId] ASC,
+	[dateISO] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+SET ANSI_PADDING ON
+
+CREATE UNIQUE NONCLUSTERED INDEX [IDX_MIILOCQT_1] ON [dbo].[MIILOCQT]
+(
+	[dateISO] ASC,
+	[itemId] ASC,
+	[locId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+ALTER TABLE [dbo].[MIILOCQT] ADD  DEFAULT (' ') FOR [itemId]
+ALTER TABLE [dbo].[MIILOCQT] ADD  DEFAULT (' ') FOR [locId]
+ALTER TABLE [dbo].[MIILOCQT] ADD  DEFAULT (' ') FOR [dateISO]
+ALTER TABLE [dbo].[MIILOCQT] ADD  DEFAULT ((0)) FOR [qStk]
+ALTER TABLE [dbo].[MIILOCQT] ADD  DEFAULT ((0)) FOR [qWip]
+ALTER TABLE [dbo].[MIILOCQT] ADD  DEFAULT ((0)) FOR [qRes]
+ALTER TABLE [dbo].[MIILOCQT] ADD  DEFAULT ((0)) FOR [qOrd]
+ALTER TABLE [dbo].[MIILOCQT] ADD  DEFAULT ((0)) FOR [cStd]
+ALTER TABLE [dbo].[MIILOCQT] ADD  DEFAULT ((0)) FOR [cLast]
+ALTER TABLE [dbo].[MIILOCQT] ADD  DEFAULT ((0)) FOR [cAvg]

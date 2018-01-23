@@ -1,0 +1,93 @@
+/****** Object:  Procedure [dbo].[pr_MISCHID_Update]    Committed by VersionSQL https://www.versionsql.com ******/
+
+
+
+CREATE PROCEDURE dbo.pr_MISCHID_Update
+	@schId nvarchar (6),
+	@schNum int,
+	@userId nvarchar (8),
+	@descr nvarchar (60),
+	@singLoc bit,
+	@locId text,
+	@startDate nvarchar (8),
+	@endDate nvarchar (8),
+	@status smallint,
+	@autoBuild smallint,
+	@useAlt bit,
+	@workWeek int,
+	@docPath nvarchar (260),
+	@initDate nvarchar (8),
+	@shortage smallint,
+	@mode smallint,
+	@bOptimistic bit,
+	@inclSalesOrd bit,
+	@inclSalesInv bit,
+	@inclQuotes bit,
+	@salesLoc nvarchar (6),
+	@pegSalesOrders bit,
+	@sortOrder smallint,
+	@bInclRaw bit,
+	@bInclRsc bit,
+	@bInclTop bit,
+	@bInclSub bit,
+	@bInclBlk bit,
+	@bInclOut bit,
+	@bInclCur bit,
+	@bInclSch bit,
+	@bInclLvl bit,
+	@bInclAll bit,
+	@bOptShifts bit,
+	@bExclSalesBef bit,
+	@exclSalesBefDate nvarchar (8),
+	@useAltLoc bit,
+	@fldXml text,
+	@schIdOrig nvarchar (6),
+	@TSCol rowversion output
+AS
+UPDATE MISCHID
+SET 	[schId] = @schId,
+	[schNum] = @schNum,
+	[userId] = @userId,
+	[descr] = @descr,
+	[singLoc] = @singLoc,
+	[locId] = @locId,
+	[startDate] = @startDate,
+	[endDate] = @endDate,
+	[status] = @status,
+	[autoBuild] = @autoBuild,
+	[useAlt] = @useAlt,
+	[workWeek] = @workWeek,
+	[docPath] = @docPath,
+	[initDate] = @initDate,
+	[shortage] = @shortage,
+	[mode] = @mode,
+	[bOptimistic] = @bOptimistic,
+	[inclSalesOrd] = @inclSalesOrd,
+	[inclSalesInv] = @inclSalesInv,
+	[inclQuotes] = @inclQuotes,
+	[salesLoc] = @salesLoc,
+	[pegSalesOrders] = @pegSalesOrders,
+	[sortOrder] = @sortOrder,
+	[bInclRaw] = @bInclRaw,
+	[bInclRsc] = @bInclRsc,
+	[bInclTop] = @bInclTop,
+	[bInclSub] = @bInclSub,
+	[bInclBlk] = @bInclBlk,
+	[bInclOut] = @bInclOut,
+	[bInclCur] = @bInclCur,
+	[bInclSch] = @bInclSch,
+	[bInclLvl] = @bInclLvl,
+	[bInclAll] = @bInclAll,
+	[bOptShifts] = @bOptShifts,
+	[bExclSalesBef] = @bExclSalesBef,
+	[exclSalesBefDate] = @exclSalesBefDate,
+	[useAltLoc] = @useAltLoc,
+	[fldXml] = @fldXml
+WHERE [schId] = @schIdOrig
+  AND rowVer = @TSCol
+
+IF @@ROWCOUNT = 1
+	SELECT @TSCol = rowVer FROM MISCHID
+	WHERE [schId] = @schId
+return @@rowcount
+

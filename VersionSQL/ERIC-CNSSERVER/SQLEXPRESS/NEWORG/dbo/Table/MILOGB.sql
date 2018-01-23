@@ -1,0 +1,58 @@
+/****** Object:  Table [dbo].[MILOGB]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[MILOGB](
+	[tranDate] [nvarchar](8) NOT NULL,
+	[userId] [nvarchar](8) NOT NULL,
+	[entry] [int] NOT NULL,
+	[detail] [int] NOT NULL,
+	[locId] [nvarchar](6) NOT NULL,
+	[binId] [nvarchar](24) NOT NULL,
+	[itemId] [nvarchar](24) NOT NULL,
+	[type] [smallint] NOT NULL,
+	[qty] [numeric](20, 6) NOT NULL,
+	[tranDt]  AS (CONVERT([datetime],[tranDate])),
+	[rowVer] [timestamp] NOT NULL,
+ CONSTRAINT [PK_MILOGB_KEY_0] PRIMARY KEY CLUSTERED 
+(
+	[tranDate] ASC,
+	[userId] ASC,
+	[entry] ASC,
+	[detail] ASC,
+	[locId] ASC,
+	[binId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+SET ANSI_PADDING ON
+
+CREATE NONCLUSTERED INDEX [IDX_MILOGB_1] ON [dbo].[MILOGB]
+(
+	[itemId] ASC,
+	[tranDate] ASC,
+	[userId] ASC,
+	[entry] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+SET ANSI_PADDING ON
+
+CREATE NONCLUSTERED INDEX [IDX_MILOGB_2] ON [dbo].[MILOGB]
+(
+	[locId] ASC,
+	[binId] ASC,
+	[tranDate] ASC,
+	[userId] ASC,
+	[entry] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+ALTER TABLE [dbo].[MILOGB] ADD  DEFAULT (' ') FOR [userId]
+ALTER TABLE [dbo].[MILOGB] ADD  DEFAULT ((0)) FOR [entry]
+ALTER TABLE [dbo].[MILOGB] ADD  DEFAULT ((0)) FOR [detail]
+ALTER TABLE [dbo].[MILOGB] ADD  DEFAULT (' ') FOR [locId]
+ALTER TABLE [dbo].[MILOGB] ADD  DEFAULT (' ') FOR [binId]
+ALTER TABLE [dbo].[MILOGB] ADD  DEFAULT (' ') FOR [itemId]
+ALTER TABLE [dbo].[MILOGB] ADD  DEFAULT ((0)) FOR [type]
+ALTER TABLE [dbo].[MILOGB] ADD  DEFAULT ((0)) FOR [qty]
+ALTER TABLE [dbo].[MILOGB]  WITH CHECK ADD  CONSTRAINT [FK_MILOGB_MILOGH] FOREIGN KEY([tranDate], [userId], [entry])
+REFERENCES [dbo].[MILOGH] ([tranDate], [userId], [entry])
+ON DELETE CASCADE
+ALTER TABLE [dbo].[MILOGB] CHECK CONSTRAINT [FK_MILOGB_MILOGH]

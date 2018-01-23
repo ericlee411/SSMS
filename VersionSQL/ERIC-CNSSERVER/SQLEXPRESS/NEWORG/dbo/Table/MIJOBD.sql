@@ -1,0 +1,66 @@
+/****** Object:  Table [dbo].[MIJOBD]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[MIJOBD](
+	[jobId] [nvarchar](12) NOT NULL,
+	[jobItem] [nvarchar](24) NOT NULL,
+	[part] [nvarchar](24) NOT NULL,
+	[locId] [nvarchar](6) NOT NULL,
+	[type] [smallint] NOT NULL,
+	[qStk] [numeric](20, 6) NOT NULL,
+	[qWip] [numeric](20, 6) NOT NULL,
+	[qRes] [numeric](20, 6) NOT NULL,
+	[qOrd] [numeric](20, 6) NOT NULL,
+	[qUsed] [numeric](20, 6) NOT NULL,
+	[qRecd] [numeric](20, 6) NOT NULL,
+	[cStk] [numeric](20, 6) NOT NULL,
+	[cWip] [numeric](20, 6) NOT NULL,
+	[cRes] [numeric](20, 6) NOT NULL,
+	[cOrd] [numeric](20, 6) NOT NULL,
+	[cUsed] [numeric](20, 6) NOT NULL,
+	[cRecd] [numeric](20, 6) NOT NULL,
+	[rowVer] [timestamp] NOT NULL,
+ CONSTRAINT [PK_MIJOBD_KEY_0] PRIMARY KEY CLUSTERED 
+(
+	[jobId] ASC,
+	[jobItem] ASC,
+	[part] ASC,
+	[locId] ASC,
+	[type] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+SET ANSI_PADDING ON
+
+CREATE NONCLUSTERED INDEX [IDX_MIJOBD_1] ON [dbo].[MIJOBD]
+(
+	[jobItem] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+SET ANSI_PADDING ON
+
+CREATE NONCLUSTERED INDEX [IDX_MIJOBD_2] ON [dbo].[MIJOBD]
+(
+	[part] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+ALTER TABLE [dbo].[MIJOBD] ADD  DEFAULT (' ') FOR [jobId]
+ALTER TABLE [dbo].[MIJOBD] ADD  DEFAULT (' ') FOR [jobItem]
+ALTER TABLE [dbo].[MIJOBD] ADD  DEFAULT (' ') FOR [part]
+ALTER TABLE [dbo].[MIJOBD] ADD  DEFAULT (' ') FOR [locId]
+ALTER TABLE [dbo].[MIJOBD] ADD  DEFAULT ((0)) FOR [type]
+ALTER TABLE [dbo].[MIJOBD] ADD  DEFAULT ((0)) FOR [qStk]
+ALTER TABLE [dbo].[MIJOBD] ADD  DEFAULT ((0)) FOR [qWip]
+ALTER TABLE [dbo].[MIJOBD] ADD  DEFAULT ((0)) FOR [qRes]
+ALTER TABLE [dbo].[MIJOBD] ADD  DEFAULT ((0)) FOR [qOrd]
+ALTER TABLE [dbo].[MIJOBD] ADD  DEFAULT ((0)) FOR [qUsed]
+ALTER TABLE [dbo].[MIJOBD] ADD  DEFAULT ((0)) FOR [qRecd]
+ALTER TABLE [dbo].[MIJOBD] ADD  DEFAULT ((0)) FOR [cStk]
+ALTER TABLE [dbo].[MIJOBD] ADD  DEFAULT ((0)) FOR [cWip]
+ALTER TABLE [dbo].[MIJOBD] ADD  DEFAULT ((0)) FOR [cRes]
+ALTER TABLE [dbo].[MIJOBD] ADD  DEFAULT ((0)) FOR [cOrd]
+ALTER TABLE [dbo].[MIJOBD] ADD  DEFAULT ((0)) FOR [cUsed]
+ALTER TABLE [dbo].[MIJOBD] ADD  DEFAULT ((0)) FOR [cRecd]
+ALTER TABLE [dbo].[MIJOBD]  WITH CHECK ADD  CONSTRAINT [FK_MIJOBD_MIJOBH] FOREIGN KEY([jobId])
+REFERENCES [dbo].[MIJOBH] ([jobId])
+ON DELETE CASCADE
+ALTER TABLE [dbo].[MIJOBD] CHECK CONSTRAINT [FK_MIJOBD_MIJOBH]
